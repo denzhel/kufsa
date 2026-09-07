@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לוח קופסת האוכל</title>
+<meta name="description" content="בונים יחד עם הילדים לוח שבועי לקופסת האוכל, מדפיסים, גוזרים ומדביקים בסקוטש.">
+<meta name="theme-color" content="#FBFCF8">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="לוח קופסת האוכל">
+<meta property="og:description" content="בונים יחד עם הילדים לוח שבועי לקופסת האוכל, מדפיסים, גוזרים ומדביקים בסקוטש.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --ink:#1F3A5F;          /* כחול דיו - טקסט */
+  --ink-soft:#5C7391;
+  --paper:#FBFCF8;        /* רקע מחברת */
+  --grid:#DDE7E1;         /* קווי משבצות */
+  --thermos:#2BB0A0;      /* טורקיז תרמוס */
+  --tomato:#E2503B;       /* אדום עגבנייה */
+  --butter:#F5C542;       /* צהוב חמאה */
+  --white:#fff;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Rubik',system-ui,'Segoe UI',sans-serif;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:5mm 5mm;
+  line-height:1.6;
+}
+h1,h2,h3{font-family:'Secular One',system-ui,sans-serif;font-weight:400;line-height:1.25;margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--thermos);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 140px}
+
+/* ---------- header ---------- */
+.top{padding:36px 0 18px}
+.top h1{font-size:38px;letter-spacing:-.01em}
+.top h1 span{color:var(--tomato)}
+.lede{margin:10px 0 0;max-width:56ch;color:var(--ink-soft)}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+.btn{
+  border:2px solid var(--ink);background:var(--white);color:var(--ink);
+  border-radius:999px;padding:9px 18px;font-weight:500;
+  transition:transform .12s ease, background .12s ease;
+}
+.btn:hover{background:var(--butter)}
+.btn:active{transform:translateY(1px)}
+.btn-main{background:var(--tomato);border-color:var(--tomato);color:var(--white)}
+.btn-main:hover{background:#c8402c;border-color:#c8402c}
+.btn-ghost{border-color:var(--grid);color:var(--ink-soft)}
+.btn-ghost:hover{background:var(--white);color:var(--ink)}
+.btn-sm{padding:5px 12px;font-size:14px;border-width:1.5px}
+
+/* ---------- sections ---------- */
+.card{
+  background:var(--white);border:1.5px solid var(--grid);border-radius:var(--r);
+  padding:20px;margin:18px 0;
+}
+.card > h2{font-size:22px;margin-bottom:4px}
+.hint{color:var(--ink-soft);font-size:14px;margin:0 0 14px}
+.field{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.field label{font-weight:500;min-width:92px}
+input[type=text]{
+  font-family:inherit;font-size:16px;color:var(--ink);
+  border:1.5px solid var(--grid);border-radius:10px;padding:9px 12px;background:var(--paper);
+}
+input[type=text]:focus{border-color:var(--thermos);outline:none;background:var(--white)}
+
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  border:1.5px solid var(--grid);background:var(--white);border-radius:999px;
+  padding:7px 16px;font-weight:500;transition:all .12s ease;
+}
+.chip[aria-pressed=true]{background:var(--thermos);border-color:var(--thermos);color:var(--white)}
+.chip-slot{display:inline-flex;align-items:center;gap:8px;padding-inline-end:8px}
+.chip-slot .x{
+  border:none;background:none;padding:0 2px;font-size:18px;line-height:1;color:var(--ink-soft);
+}
+.chip-slot .x:hover{color:var(--tomato)}
+
+/* ---------- library ---------- */
+.cat-title{font-size:16px;font-family:'Secular One',sans-serif;margin:18px 0 8px;color:var(--ink-soft)}
+.grid-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.item{
+  position:relative;background:var(--paper);border:1.5px solid var(--grid);border-radius:12px;
+  padding:10px 6px 8px;text-align:center;transition:border-color .12s ease,background .12s ease;
+}
+.item:hover{border-color:var(--thermos)}
+.item.on{border-color:var(--tomato);background:#fff6f4}
+.item .em{font-size:30px;line-height:1.1;display:block}
+.item .nm{font-size:13px;display:block;margin-top:2px}
+.qty{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
+.qty button{
+  width:26px;height:26px;border-radius:8px;border:1.5px solid var(--grid);background:var(--white);
+  font-weight:700;line-height:1;padding:0;
+}
+.qty button:hover{border-color:var(--ink)}
+.qty span{min-width:18px;font-weight:500;font-size:14px}
+
+/* emoji picker */
+.picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:4px;max-height:132px;overflow:auto;
+  border:1.5px solid var(--grid);border-radius:10px;padding:6px;background:var(--paper)}
+.picker button{border:none;background:none;font-size:24px;padding:4px;border-radius:8px;line-height:1}
+.picker button:hover{background:var(--butter)}
+.picker button[aria-pressed=true]{background:var(--thermos)}
+
+/* ---------- paper preview ---------- */
+.preview-head{display:flex;align-items:baseline;gap:10px;margin:34px 0 10px}
+.preview-head h2{font-size:22px}
+.preview-head .pg{font-size:14px;color:var(--ink-soft)}
+.paper{
+  background:var(--white);border:1px solid #E3E8E4;box-shadow:0 2px 0 #E9EEE9;
+  padding:10mm;overflow:auto;
+}
+.sheet-title{font-family:'Secular One',sans-serif;font-size:20px;text-align:center;margin-bottom:2mm}
+.sheet-sub{text-align:center;font-size:12px;color:var(--ink-soft);margin-bottom:5mm}
+
+table.board{border-collapse:collapse;margin:0 auto;table-layout:fixed}
+table.board th,table.board td{border:1.2px solid var(--ink);padding:0}
+table.board th{height:11mm;font-size:13px;font-family:'Secular One',sans-serif;font-weight:400;background:#F2F8F6}
+table.board th.corner{background:var(--white);border:none}
+table.board td{height:34mm;width:34mm;vertical-align:middle;text-align:center}
+table.board th.slot{width:20mm;font-size:12px;writing-mode:horizontal-tb;background:#FFF6F4}
+.spot{
+  width:30mm;height:30mm;margin:0 auto;border:1.2px dashed #B9C6BE;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+}
+.spot i{display:block;width:9mm;height:9mm;border:1px dashed #D3DDD6;border-radius:50%}
+
+/* cubes */
+.cubes{display:flex;flex-wrap:wrap;gap:3mm;justify-content:flex-start}
+.cube{
+  width:30mm;height:30mm;border:1.2px dashed var(--ink);border-radius:5px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm;
+  background:var(--white);
+}
+.cube .em{font-size:15mm;line-height:1}
+.cube .nm{font-size:8pt;text-align:center;padding:0 1mm;line-height:1.1}
+.cube.blank .nm{color:#B9C6BE;border-bottom:1px dotted #B9C6BE;width:20mm;height:4mm}
+.cube.pop{animation:pop .28s ease}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.cut-note{text-align:center;font-size:11px;color:var(--ink-soft);margin-top:5mm}
+.empty{color:var(--ink-soft);text-align:center;padding:30px 10px}
+
+/* ---------- sticky bar ---------- */
+.bar{
+  position:fixed;inset-inline:0;bottom:0;background:var(--white);border-top:1.5px solid var(--grid);
+  padding:12px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:20;
+}
+.saved{font-size:14px;color:var(--thermos);align-self:center}
+
+/* ---------- modal ---------- */
+dialog{
+  border:2px solid var(--ink);border-radius:var(--r);padding:0;max-width:520px;width:calc(100% - 32px);
+  color:var(--ink);background:var(--white);
+}
+dialog::backdrop{background:rgba(31,58,95,.35)}
+.modal-in{padding:22px}
+.modal-in h2{font-size:22px;margin-bottom:10px}
+.modal-in ul{padding-inline-start:20px;margin:0 0 14px}
+.modal-in li{margin-bottom:7px}
+.modal-in li b{font-weight:500}
+.modal-foot{display:flex;gap:10px;justify-content:flex-start;margin-top:6px}
+
+@media (max-width:640px){
+  .top h1{font-size:29px}
+  .field label{min-width:auto;width:100%}
+  .paper{padding:6mm}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- print ---------- */
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  body{background:none;color:#000}
+  .noprint{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .paper{border:none;box-shadow:none;padding:0;margin:0}
+  .preview-head{display:none}
+  #sheet-board{page-break-after:always}
+  .cube{page-break-inside:avoid}
+  table.board th{background:#fff!important;-webkit-print-color-adjust:exact}
+  table.board th.slot{background:#fff!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top noprint">
+    <h1>לוח <span>קופסת האוכל</span></h1>
+    <p class="lede">בונים את הלוח יחד עם הילד, מדפיסים שני עמודים, גוזרים את הקוביות ומדביקים סקוטש. כל בוקר הוא בוחר מה נכנס לקופסה ומצמיד לוח.</p>
+    <div class="top-actions">
+      <button class="btn" id="btn-materials">מה צריך להכין?</button>
+    </div>
+  </header>
+
+  <!-- 1. הגדרות -->
+  <section class="card noprint">
+    <h2>מי ומתי</h2>
+    <p class="hint">בחרו את הימים שבהם הילד לוקח קופסה לבית הספר.</p>
+    <div class="field">
+      <label for="kid">שם הילד/ה</label>
+      <input type="text" id="kid" placeholder="מיכל" maxlength="18">
+    </div>
+    <div class="field">
+      <label>ימים</label>
+      <div class="chips" id="days"></div>
+    </div>
+  </section>
+
+  <!-- 2. שורות הלוח -->
+  <section class="card noprint">
+    <h2>מה יש בקופסה</h2>
+    <p class="hint">אלו השורות של הלוח. אפשר למחוק, ואפשר להוסיף משלכם.</p>
+    <div class="chips" id="slots" style="margin-bottom:12px"></div>
+    <div class="field" style="margin:0">
+      <input type="text" id="new-slot" placeholder="למשל: מתוק ליום שישי" maxlength="16">
+      <button class="btn btn-sm" id="add-slot">הוספת שורה</button>
+    </div>
+  </section>
+
+  <!-- 3. ספריית פריטים -->
+  <section class="card noprint">
+    <h2>הפריטים שהוא אוהב</h2>
+    <p class="hint">לחיצה מוסיפה קובייה. אם הוא אוכל תפוח שלוש פעמים בשבוע, הגדילו ל‑3 והוא יודפס שלוש פעמים.</p>
+    <div id="library"></div>
+
+    <h3 class="cat-title">הוספת פריט משלכם</h3>
+    <div class="field">
+      <input type="text" id="new-name" placeholder="שם הפריט" maxlength="20">
+      <select id="new-cat" style="font-family:inherit;font-size:16px;padding:9px;border-radius:10px;border:1.5px solid var(--grid);background:var(--paper);color:var(--ink)"></select>
+      <button class="btn btn-sm" id="add-item">הוספה</button>
+    </div>
+    <div class="picker" id="picker" aria-label="בחירת איור לפריט"></div>
+  </section>
+
+  <!-- 4. תצוגה מקדימה -->
+  <div class="preview-head noprint"><h2>עמוד 1</h2><span class="pg">הלוח עצמו. מומלץ ללמינציה.</span></div>
+  <div class="paper" id="sheet-board">
+    <div class="sheet-title" id="board-title">הקופסה שלי</div>
+    <div class="sheet-sub">בוחרים כל בוקר ומצמידים</div>
+    <div id="board-holder"></div>
+  </div>
+
+  <div class="preview-head noprint"><h2>עמוד 2</h2><span class="pg">הקוביות לגזירה.</span></div>
+  <div class="paper" id="sheet-cubes">
+    <div class="cubes" id="cubes-holder"></div>
+    <div class="cut-note">גוזרים לפי הקו המקווקו · מדביקים סקוטש בגב כל קובייה</div>
+  </div>
+</div>
+
+<div class="bar noprint">
+  <button class="btn btn-main" id="btn-print">הדפסה</button>
+  <button class="btn" id="btn-share">העתקת קישור</button>
+  <button class="btn btn-ghost" id="btn-reset">התחלה מחדש</button>
+  <span class="saved" id="saved-note" hidden>נשמר</span>
+</div>
+
+<dialog id="dlg-materials">
+  <div class="modal-in">
+    <h2>מה צריך להכין</h2>
+    <ul>
+      <li><b>נייר עבה</b> ‏(180–250 גרם) לשני העמודים. אפשר גם נייר רגיל מודבק על קרטון מקופסת דגנים.</li>
+      <li><b>מדפסת צבע</b> ‏— האיורים יוצאים בצבע.</li>
+      <li><b>מספריים</b> ‏— גם קטנות לילדים, הגזירה היא חצי מהכיף.</li>
+      <li><b>למינציה</b> ‏— שקית A4 ומכונה, או סרט למינציה קר. חובה ללוח, מומלץ גם לקוביות.</li>
+      <li><b>נקודות סקוטש דביקות</b> ‏(velcro dots) בקוטר 15–20 מ״מ. צריך זוג לכל קובייה ולכל משבצת בלוח.</li>
+      <li><b>מגנטים דביקים</b> ‏— חלופה לסקוטש, אם הלוח יהיה על המקרר.</li>
+      <li><b>כיס ניילון</b> ‏— מודבק בגב הלוח, לאחסון הקוביות שלא בשימוש.</li>
+    </ul>
+    <div class="modal-foot"><button class="btn" data-close>סגירה</button></div>
+  </div>
+</dialog>
+
+<script>
+/* ---------- ספריית פריטים ---------- */
+const CATS = [
+  {id:"main",  name:"עיקרית"},
+  {id:"fruit", name:"פרי"},
+  {id:"veg",   name:"ירק"},
+  {id:"side",  name:"תוספת"},
+  {id:"drink", name:"שתייה"}
+];
+
+const LIB = [
+  ["main","כריך גבינה","🥪"],["main","כריך שוקולד","🍞"],["main","פיתה","🫓"],
+  ["main","בייגל","🥯"],["main","לחמנייה","🥐"],["main","פסטה","🍝"],
+  ["main","אורז","🍚"],["main","פיצה","🍕"],["main","טוסט","🧀"],
+  ["main","ביצה קשה","🥚"],["main","שניצל","🍗"],["main","בורקס","🥟"],
+  ["main","פנקייק","🥞"],["main","לאפה","🌯"],["main","וופל","🧇"],
+
+  ["fruit","תפוח","🍎"],["fruit","בננה","🍌"],["fruit","קלמנטינה","🍊"],
+  ["fruit","ענבים","🍇"],["fruit","תות","🍓"],["fruit","אבטיח","🍉"],
+  ["fruit","אגס","🍐"],["fruit","אפרסק","🍑"],["fruit","מלון","🍈"],
+  ["fruit","קיווי","🥝"],["fruit","מנגו","🥭"],["fruit","דובדבנים","🍒"],
+
+  ["veg","מלפפון","🥒"],["veg","גזר","🥕"],["veg","עגבניות שרי","🍅"],
+  ["veg","פלפל","🫑"],["veg","חסה","🥬"],["veg","תירס","🌽"],
+  ["veg","זיתים","🫒"],["veg","ברוקולי","🥦"],["veg","אבוקדו","🥑"],
+
+  ["side","עוגיות","🍪"],["side","במבה","🥜"],["side","ביסלי","🥨"],
+  ["side","קרקרים","🍘"],["side","פופקורן","🍿"],["side","שוקולד","🍫"],
+  ["side","יוגורט","🥛"],["side","מעדן","🍮"],["side","מאפין","🧁"],
+  ["side","אגוזים","🌰"],["side","פרי יבש","🍯"],
+
+  ["drink","מים","💧"],["drink","מיץ","🧃"],["drink","שוקו","🥛"],["drink","תה","🍵"]
+];
+
+const PICKER_EMOJI = "🍎🍌🍊🍇🍓🍉🍐🍑🍈🥝🥭🍍🍒🥥🥪🍞🫓🥯🥐🍝🍚🍕🧀🥚🍗🥟🥞🌯🧇🥙🥒🥕🍅🫑🥬🌽🫒🥦🥑🧅🍪🥜🥨🍘🍿🍫🥛🍮🧁🌰🍯🍬💧🧃🍵🥤🍩🍰🧊".split(/(?:)/u);
+const DAYS = ["ראשון","שני","שלישי","רביעי","חמישי","שישי"];
+
+/* ---------- מצב ---------- */
+const DEFAULT_STATE = {
+  kid:"",
+  days:[0,1,2,3,4],
+  slots:["עיקרית","פרי","ירק","תוספת"],
+  picks:[],          // {n:name, e:emoji, q:qty}
+  blanks:4
+};
+let state = structuredClone(DEFAULT_STATE);
+let pickedEmoji = "🍎";
+let fromHash = false;
+
+/* ---------- קידוד קישור שיתוף (תומך עברית) ---------- */
+function enc(obj){
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function dec(str){
+  const b64 = str.replace(/-/g,"+").replace(/_/g,"/");
+  const bin = atob(b64);
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function save(){
+  if(fromHash){ try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} fromHash = false; }
+  try{ localStorage.setItem("lunchbox-board", JSON.stringify(state)); }catch(e){}
+  flash();
+}
+let flashTimer;
+function flash(){
+  const n = document.getElementById("saved-note");
+  n.hidden = false; clearTimeout(flashTimer);
+  flashTimer = setTimeout(()=> n.hidden = true, 1600);
+}
+function load(){
+  if(location.hash.length > 3){
+    try{ state = Object.assign(structuredClone(DEFAULT_STATE), dec(location.hash.slice(1))); fromHash = true; return; }
+    catch(e){ /* קישור לא תקין - ממשיכים לשמירה מקומית */ }
+  }
+  try{
+    const raw = localStorage.getItem("lunchbox-board");
+    if(raw) state = Object.assign(structuredClone(DEFAULT_STATE), JSON.parse(raw));
+  }catch(e){}
+}
+
+function sanitize(){
+  if(!Array.isArray(state.days)) state.days = DEFAULT_STATE.days.slice();
+  state.days = [...new Set(state.days.filter(i => Number.isInteger(i) && i >= 0 && i < DAYS.length))].sort((a,b)=>a-b);
+  if(!state.days.length) state.days = DEFAULT_STATE.days.slice();
+  state.slots = (Array.isArray(state.slots) ? state.slots : []).filter(s => typeof s === "string" && s.trim()).map(s => s.slice(0,16)).slice(0,12);
+  if(!state.slots.length) state.slots = DEFAULT_STATE.slots.slice();
+  state.picks = (Array.isArray(state.picks) ? state.picks : []).filter(p => p && typeof p.n === "string" && p.n.trim()).map(p => ({
+    n: p.n.slice(0,24),
+    e: typeof p.e === "string" ? [...p.e].slice(0,4).join("") : "",
+    q: Math.max(1, Math.min(20, Math.round(+p.q) || 1)),
+    c: typeof p.c === "string" ? p.c : "side"
+  }));
+  state.kid = typeof state.kid === "string" ? state.kid.slice(0,18) : "";
+  state.blanks = Math.max(0, Math.min(12, Math.round(+state.blanks) || 0));
+}
+
+/* ---------- ציור ממשק ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function drawDays(){
+  const box = $("#days"); box.innerHTML = "";
+  DAYS.forEach((d,i)=>{
+    const b = document.createElement("button");
+    b.className = "chip"; b.textContent = d;
+    b.setAttribute("aria-pressed", state.days.includes(i));
+    b.onclick = ()=>{
+      const at = state.days.indexOf(i);
+      if(at > -1){ if(state.days.length === 1) return; state.days.splice(at,1); }
+      else state.days.push(i);
+      state.days.sort((a,b)=>a-b);
+      drawDays(); drawBoard(); save();
+    };
+    box.appendChild(b);
+  });
+}
+
+function drawSlots(){
+  const box = $("#slots"); box.innerHTML = "";
+  state.slots.forEach((s,i)=>{
+    const wrap = document.createElement("span");
+    wrap.className = "chip chip-slot";
+    wrap.setAttribute("aria-pressed","true");
+    wrap.append(s);
+    const x = document.createElement("button");
+    x.className = "x"; x.textContent = "×";
+    x.setAttribute("aria-label","מחיקת שורה " + s);
+    x.onclick = ()=>{ if(state.slots.length===1) return; state.slots.splice(i,1); drawSlots(); drawBoard(); save(); };
+    wrap.appendChild(x);
+    box.appendChild(wrap);
+  });
+}
+
+function findPick(name){ return state.picks.find(p => p.n === name); }
+
+function setQty(name, emoji, delta, cat){
+  let p = findPick(name);
+  if(!p && delta > 0){ p = {n:name, e:emoji, q:0, c:cat || "side"}; state.picks.push(p); }
+  if(!p) return;
+  p.q = Math.max(0, Math.min(20, p.q + delta));
+  if(p.q === 0) state.picks = state.picks.filter(x => x !== p);
+  drawLibrary(); drawCubes(); save();
+}
+
+function drawLibrary(){
+  const box = $("#library"); box.innerHTML = "";
+  const custom = state.picks.filter(p => !LIB.some(l => l[1] === p.n));
+  CATS.forEach(cat=>{
+    const items = LIB.filter(l => l[0] === cat.id);
+    custom.filter(c => (c.c || "side") === cat.id).forEach(c => items.push([cat.id, c.n, c.e]));
+    if(!items.length) return;
+    const h = document.createElement("h3"); h.className = "cat-title"; h.textContent = cat.name;
+    box.appendChild(h);
+    const grid = document.createElement("div"); grid.className = "grid-items";
+    items.forEach(([,name,emoji])=>{
+      const p = findPick(name);
+      const el = document.createElement("div");
+      el.className = "item" + (p ? " on" : "");
+      el.innerHTML =
+        '<span class="em">' + esc(emoji) + '</span>' +
+        '<span class="nm">' + esc(name) + '</span>';
+      el.tabIndex = 0; el.setAttribute("role","button");
+      el.onclick = ()=> setQty(name, emoji, +1, cat.id);
+      el.onkeydown = ev => { if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); setQty(name, emoji, +1, cat.id); } };
+      const q = document.createElement("div"); q.className = "qty";
+      const minus = document.createElement("button");
+      minus.textContent = "−"; minus.setAttribute("aria-label","פחות " + name);
+      minus.onclick = ev => { ev.stopPropagation(); setQty(name, emoji, -1, cat.id); };
+      const num = document.createElement("span"); num.textContent = p ? p.q : 0;
+      const plus = document.createElement("button");
+      plus.textContent = "+"; plus.setAttribute("aria-label","עוד " + name);
+      plus.onclick = ev => { ev.stopPropagation(); setQty(name, emoji, +1, cat.id); };
+      q.append(minus, num, plus);
+      el.appendChild(q);
+      grid.appendChild(el);
+    });
+    box.appendChild(grid);
+  });
+}
+
+function drawBoard(){
+  $("#board-title").textContent = state.kid ? "הקופסה של " + state.kid : "הקופסה שלי";
+  const holder = $("#board-holder");
+  const t = document.createElement("table"); t.className = "board";
+  const head = document.createElement("tr");
+  const corner = document.createElement("th"); corner.className = "corner"; head.appendChild(corner);
+  state.days.forEach(i=>{
+    const th = document.createElement("th"); th.textContent = DAYS[i]; head.appendChild(th);
+  });
+  t.appendChild(head);
+  state.slots.forEach(s=>{
+    const tr = document.createElement("tr");
+    const th = document.createElement("th"); th.className = "slot"; th.textContent = s; tr.appendChild(th);
+    state.days.forEach(()=>{
+      const td = document.createElement("td");
+      td.innerHTML = '<div class="spot"><i></i></div>';
+      tr.appendChild(td);
+    });
+    t.appendChild(tr);
+  });
+  holder.innerHTML = ""; holder.appendChild(t);
+
+  // יותר מ-5 ימים לא נכנס לרוחב A4 לאורך
+  let st = document.getElementById("page-orient");
+  if(!st){ st = document.createElement("style"); st.id = "page-orient"; document.head.appendChild(st); }
+  st.textContent = state.days.length > 5 ? "@page{size:A4 landscape;margin:10mm}" : "";
+}
+
+function drawCubes(){
+  const holder = $("#cubes-holder");
+  const prev = holder.childElementCount;
+  holder.innerHTML = "";
+  const total = state.picks.reduce((a,p)=>a+p.q, 0);
+  if(!total){
+    holder.innerHTML = '<p class="empty">עוד לא נבחרו פריטים. בחרו למעלה מה הילד אוהב והקוביות יופיעו כאן.</p>';
+    return;
+  }
+  state.picks.forEach(p=>{
+    for(let i=0;i<p.q;i++){
+      const c = document.createElement("div");
+      c.className = "cube" + (holder.childElementCount >= prev ? " pop" : "");
+      c.innerHTML = '<span class="em">'+esc(p.e)+'</span><span class="nm">'+esc(p.n)+'</span>';
+      holder.appendChild(c);
+    }
+  });
+  for(let i=0;i<state.blanks;i++){
+    const c = document.createElement("div");
+    c.className = "cube blank";
+    c.innerHTML = '<span class="em">✏️</span><span class="nm"></span>';
+    holder.appendChild(c);
+  }
+}
+
+function drawPicker(){
+  const box = $("#picker"); box.innerHTML = "";
+  [...new Set(PICKER_EMOJI)].filter(Boolean).forEach(e=>{
+    const b = document.createElement("button");
+    b.textContent = e; b.setAttribute("aria-label","בחירת " + e);
+    b.setAttribute("aria-pressed", e === pickedEmoji);
+    b.onclick = ()=>{ pickedEmoji = e; drawPicker(); };
+    box.appendChild(b);
+  });
+}
+
+/* ---------- אירועים ---------- */
+$("#kid").oninput = e => { state.kid = e.target.value.trim(); drawBoard(); save(); };
+
+$("#add-slot").onclick = ()=>{
+  const inp = $("#new-slot"); const v = inp.value.trim();
+  if(!v) { inp.focus(); return; }
+  if(state.slots.includes(v)) { inp.value = ""; return; }
+  state.slots.push(v); inp.value = "";
+  drawSlots(); drawBoard(); save();
+};
+$("#new-slot").onkeydown = e => { if(e.key === "Enter") $("#add-slot").click(); };
+
+$("#add-item").onclick = ()=>{
+  const inp = $("#new-name"); const v = inp.value.trim();
+  if(!v){ inp.focus(); return; }
+  setQty(v, pickedEmoji, +1, $("#new-cat").value);
+  inp.value = "";
+};
+$("#new-name").onkeydown = e => { if(e.key === "Enter") $("#add-item").click(); };
+
+$("#btn-print").onclick = ()=> window.print();
+
+$("#btn-share").onclick = async ()=>{
+  const url = location.origin + location.pathname + "#" + enc(state);
+  try{
+    await navigator.clipboard.writeText(url);
+    $("#btn-share").textContent = "הקישור הועתק";
+    setTimeout(()=> $("#btn-share").textContent = "העתקת קישור", 2000);
+  }catch(e){
+    prompt("העתיקו את הקישור:", url);
+  }
+};
+
+$("#btn-reset").onclick = ()=>{
+  if(!confirm("למחוק הכל ולהתחיל מחדש?")) return;
+  state = structuredClone(DEFAULT_STATE);
+  location.hash = "";
+  $("#kid").value = "";
+  renderAll(); save();
+};
+
+$("#btn-materials").onclick = ()=> $("#dlg-materials").showModal();
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = e => e.target.closest("dialog").close());
+
+/* ---------- הפעלה ---------- */
+function renderAll(){
+  $("#kid").value = state.kid || "";
+  drawDays(); drawSlots(); drawLibrary(); drawBoard(); drawCubes();
+}
+const sel = $("#new-cat");
+CATS.forEach(c => { const o = document.createElement("option"); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
+sel.value = "side";
+load(); sanitize(); drawPicker(); renderAll();
+</script>
+</body>
+</html>
