@@ -28,7 +28,7 @@ python3 -m http.server 8000
 
 ```bash
 npm i -g wrangler
-wrangler pages deploy . --project-name lunchbox-board
+wrangler pages deploy . --project-name kufsa
 ```
 
 או דרך הדשבורד: Workers & Pages → Create → Pages → Connect to Git, בוחרים את הרפו,
@@ -37,7 +37,8 @@ wrangler pages deploy . --project-name lunchbox-board
 
 ### GitHub Pages
 
-Settings → Pages → Source: Deploy from a branch → `main` / `root`.
+Settings → Pages → Source: Deploy from a branch → `master` / `root`.
+דומיין מותאם: `kufsa.denzhel.com` (קובץ `CNAME`). האתר באוויר ב-https://kufsa.denzhel.com
 
 ## רעיונות להמשך
 
