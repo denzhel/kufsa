@@ -27,7 +27,7 @@
 ## מבנה
 ```
 index.html                       הכל כאן
-README.md                        פריסה ל־Cloudflare Pages / GitHub Pages
+README.md                        פריסה ל־Cloudflare Pages
 ```
 
 ## סגנון ויזואלי

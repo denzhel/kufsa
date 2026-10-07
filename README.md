@@ -24,21 +24,10 @@ python3 -m http.server 8000
 
 ## פריסה
 
-### Cloudflare Pages (מומלץ)
+### Cloudflare Pages
 
-```bash
-npm i -g wrangler
-wrangler pages deploy . --project-name kufsa
-```
-
-או דרך הדשבורד: Workers & Pages → Create → Pages → Connect to Git, בוחרים את הרפו,
-משאירים את Build command ריק ו-Build output directory על `/`.
-כל PR מקבל preview URL משלו.
-
-### GitHub Pages
-
-Settings → Pages → Source: Deploy from a branch → `master` / `root`.
-דומיין מותאם: `kufsa.denzhel.com` (קובץ `CNAME`). האתר באוויר ב-https://kufsa.denzhel.com
+האתר מוגש מ-Cloudflare Pages בכתובת https://kufsa.denzhel.com, והפריסה מוגדרת ב-`denzhel/tofu-infra`.
+כל דחיפה ל-`master` מפרסמת אוטומטית, וכל PR מקבל preview URL משלו.
 
 ## רעיונות להמשך
 
